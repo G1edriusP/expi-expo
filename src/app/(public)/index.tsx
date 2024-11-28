@@ -1,11 +1,16 @@
-import { Button } from "@/ui/components";
-import { useOAuth } from "@clerk/clerk-expo";
 import { View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
+import { useOAuth } from "@clerk/clerk-expo";
+import { useQuery } from "convex/react";
+import { api } from "convex/_generated/api";
+
+import { Button } from "@/ui/components";
 
 const Index = () => {
   const { styles } = useStyles(stylesheet);
   const { startOAuthFlow: startGoogleOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+  const data = useQuery(api.users.getAllUsers);
+  console.log("🚀 ~ Index ~ data:", data);
 
   const handleGoogleLogin = async () => {
     try {
