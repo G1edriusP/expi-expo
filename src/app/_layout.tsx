@@ -4,7 +4,8 @@ import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { DMSans_400Regular, DMSans_500Medium, DMSans_700Bold, useFonts } from "@expo-google-fonts/dm-sans";
 import { ClerkProvider, ClerkLoaded, useAuth } from "@clerk/clerk-expo";
-import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { ConvexReactClient } from "convex/react";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
 
 import { tokenCache } from "@/common/utils/tokenCache";
 import "@/common/utils/unistyles";
@@ -42,9 +43,9 @@ export default function RootLayout() {
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       <ClerkLoaded>
-        <ConvexProvider client={convexClient}>
+        <ConvexProviderWithClerk client={convexClient} useAuth={useAuth}>
           <InitialLayout />
-        </ConvexProvider>
+        </ConvexProviderWithClerk>
       </ClerkLoaded>
     </ClerkProvider>
   );
