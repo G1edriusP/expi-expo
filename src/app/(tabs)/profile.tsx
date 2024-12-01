@@ -4,7 +4,7 @@ import { useOAuth } from "@clerk/clerk-expo";
 
 import { Button } from "@/ui/components";
 
-const Index = () => {
+const Profile = () => {
   const { styles } = useStyles(stylesheet);
   const { startOAuthFlow: startGoogleOAuthFlow } = useOAuth({ strategy: "oauth_google" });
 
@@ -28,7 +28,7 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Profile;
 
 const stylesheet = createStyleSheet((theme) => ({
   container: {
