@@ -13,21 +13,21 @@ const Home = () => {
   const { styles, theme } = useStyles(stylesheet);
   const places = useQuery(api.places.getAllPlaces);
 
-  const animateToRegion = (latitude: number, longitude: number) => {
+  const animateToRegion = useCallback((latitude: number, longitude: number) => {
     mapRef.current?.animateToRegion({
       latitude,
       longitude,
       latitudeDelta: 0.01,
       longitudeDelta: 0.01,
     });
-  };
+  }, []);
 
-  const handleMarkerPress = (longitude: number, latitude: number, index: number) => {
+  const handleMarkerPress = useCallback((longitude: number, latitude: number, index: number) => {
     animateToRegion(latitude, longitude);
     setTimeout(() => {
       listRef.current?.scrollToIndex({ index, animated: true });
     }, 300);
-  };
+  }, []);
 
   const handleViewableItemsChanged = useCallback(({ viewableItems }) => {
     if (viewableItems.length > 0) {

@@ -1,13 +1,6 @@
 import { internalMutation, query } from "convex/_generated/server";
 import { v } from "convex/values";
 
-export const getAllUsers = query({
-  args: {},
-  handler: async (ctx) => {
-    return await ctx.db.query("users").collect();
-  },
-});
-
 export const createUser = internalMutation({
   args: {
     email: v.string(),
@@ -27,5 +20,17 @@ export const createUser = internalMutation({
     });
 
     return userId;
+  },
+});
+
+export const getLoggedInUser = query({
+  args: {
+    clerkId: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("clerkId"), args.clerkId))
+      .unique();
   },
 });

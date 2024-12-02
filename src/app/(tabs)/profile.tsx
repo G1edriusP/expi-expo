@@ -1,29 +1,55 @@
-import { View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
-import { useOAuth } from "@clerk/clerk-expo";
+import { useAuth, useOAuth } from "@clerk/clerk-expo";
 
 import { Button } from "@/ui/components";
+import { useCallback, useEffect } from "react";
+import { useUserProfile } from "@/common/utils/hooks/useUserProfile";
+import { useNavigation, useRouter } from "expo-router";
+import { useRoute } from "@react-navigation/native";
 
 const Profile = () => {
   const { styles } = useStyles(stylesheet);
+  const { isSignedIn } = useAuth();
+  const user = useUserProfile();
+  const navigation = useNavigation();
   const { startOAuthFlow: startGoogleOAuthFlow } = useOAuth({ strategy: "oauth_google" });
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = useCallback(async () => {
     try {
       const { createdSessionId, setActive } = await startGoogleOAuthFlow();
-      console.log("🚀 ~ handleGoogleLogin ~ createdSessionId:", createdSessionId);
+
       if (createdSessionId && setActive) {
         setActive({ session: createdSessionId });
       }
     } catch (error) {
-      // TODO: Handle error
       console.log(error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!user) {
+      navigation.setOptions({ title: "Log in" });
+    } else {
+      navigation.setOptions({ title: `${user.firstName} ${user.lastName}` });
+    }
+  }, [user]);
+
+  if (!isSignedIn) {
+    return (
+      <View style={styles.container}>
+        <Button title="Login with Google" onPress={handleGoogleLogin} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <Button title="Login with Google" onPress={handleGoogleLogin} />
+      {!user ? null : (
+        <>
+          <Image source={{ uri: user.imageUrl }} style={styles.imageContainer} />
+        </>
+      )}
     </View>
   );
 };
@@ -33,12 +59,27 @@ export default Profile;
 const stylesheet = createStyleSheet((theme) => ({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: theme.dimensions.size_24,
     backgroundColor: theme.colors.background,
+    alignItems: "center",
+    gap: theme.dimensions.size_24,
   },
-  text: {
+  imageContainer: {
+    width: theme.dimensions.size_64 * 2,
+    height: theme.dimensions.size_64 * 2,
+    borderRadius: theme.dimensions.size_24,
+  },
+  profileInfoContainer: {
+    gap: theme.dimensions.size_24,
+  },
+  title: {
     color: theme.colors.text,
     fontFamily: theme.fonts.bold,
+    fontSize: theme.dimensions.size_24,
+  },
+  subText: {
+    color: theme.colors.text,
+    fontFamily: theme.fonts.regular,
+    fontSize: theme.dimensions.size_16,
   },
 }));
