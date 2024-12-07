@@ -1,15 +1,26 @@
-import { Tabs, useLocalSearchParams } from "expo-router";
+import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useStyles } from "react-native-unistyles";
+import { UnistylesRuntime, useStyles } from "react-native-unistyles";
 import { useAuth } from "@clerk/clerk-expo";
-import { LogoutButton } from "@/ui/components";
+import { LogoutButton, ThemeButton } from "@/ui/components";
 
 export default function TabLayout() {
   const { theme } = useStyles();
-  const { signOut } = useAuth();
+  const { signOut, isSignedIn } = useAuth();
 
   return (
-    <Tabs screenOptions={{ tabBarShowLabel: false, tabBarActiveTintColor: theme.colors.text }}>
+    <Tabs
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: theme.colors.text,
+        tabBarInactiveTintColor: theme.colors.text,
+        tabBarStyle: { backgroundColor: theme.colors.background, paddingTop: theme.dimensions.size_8 },
+        headerStyle: { backgroundColor: theme.colors.background },
+        headerLeftContainerStyle: { paddingHorizontal: theme.dimensions.size_8 },
+        headerRightContainerStyle: { paddingHorizontal: theme.dimensions.size_8 },
+        headerTitleStyle: { color: theme.colors.text },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -27,7 +38,13 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons name={focused ? "person" : "person-outline"} size={size} color={color} />
           ),
-          headerRight: () => <LogoutButton onPress={() => signOut()} />,
+          headerLeft: () => (
+            <ThemeButton
+              onPress={() => UnistylesRuntime.setTheme(UnistylesRuntime.themeName === "dark" ? "light" : "dark")}
+              iconName={UnistylesRuntime.themeName === "dark" ? "sunny-outline" : "moon-outline"}
+            />
+          ),
+          headerRight: () => (isSignedIn ? <LogoutButton onPress={() => signOut()} /> : null),
         }}
       />
     </Tabs>

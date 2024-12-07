@@ -5,8 +5,7 @@ import { useAuth, useOAuth } from "@clerk/clerk-expo";
 import { Button } from "@/ui/components";
 import { useCallback, useEffect } from "react";
 import { useUserProfile } from "@/common/utils/hooks/useUserProfile";
-import { useNavigation, useRouter } from "expo-router";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "expo-router";
 
 const Profile = () => {
   const { styles } = useStyles(stylesheet);
@@ -37,7 +36,7 @@ const Profile = () => {
 
   if (!isSignedIn) {
     return (
-      <View style={styles.container}>
+      <View style={styles.loginContainer}>
         <Button title="Login with Google" onPress={handleGoogleLogin} />
       </View>
     );
@@ -48,6 +47,7 @@ const Profile = () => {
       {!user ? null : (
         <>
           <Image source={{ uri: user.imageUrl }} style={styles.imageContainer} />
+          <Text style={styles.subText}>{user.email}</Text>
         </>
       )}
     </View>
@@ -57,6 +57,13 @@ const Profile = () => {
 export default Profile;
 
 const stylesheet = createStyleSheet((theme) => ({
+  loginContainer: {
+    flex: 1,
+    padding: theme.dimensions.size_24,
+    backgroundColor: theme.colors.background,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     padding: theme.dimensions.size_24,

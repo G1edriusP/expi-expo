@@ -57,7 +57,7 @@ const stylesheet = createStyleSheet((theme) => ({
   textPrimary: {
     fontFamily: theme.fonts.medium,
     fontSize: theme.dimensions.size_16,
-    color: theme.colors.background,
+    color: theme.colors.text,
   },
   textSecondary: {
     fontFamily: theme.fonts.medium,

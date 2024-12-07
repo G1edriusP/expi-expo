@@ -1,6 +1,6 @@
 import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
-import { createStyleSheet, useStyles } from "react-native-unistyles";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { createStyleSheet, UnistylesRuntime, useStyles } from "react-native-unistyles";
+import MapView from "react-native-maps";
 import { useQuery } from "convex/react";
 import { api } from "convex/_generated/api";
 import { MapPlaceItem, MapPlaceMarker } from "@/ui/components";
@@ -42,7 +42,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <MapView ref={mapRef} style={styles.mapContainer}>
+      <MapView ref={mapRef} style={styles.mapContainer} userInterfaceStyle={UnistylesRuntime.themeName}>
         {places?.map((place, index) => (
           <MapPlaceMarker
             key={place._id}

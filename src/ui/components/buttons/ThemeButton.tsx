@@ -3,22 +3,23 @@ import React from "react";
 import { createStyleSheet, useStyles } from "react-native-unistyles";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-interface LogoutButtonProps {
+interface ThemeButtonProps {
   onPress: () => void;
+  iconName: "sunny-outline" | "moon-outline";
 }
 
-const LogoutButton = (props: LogoutButtonProps) => {
-  const { onPress } = props;
+const ThemeButton = (props: ThemeButtonProps) => {
+  const { onPress, iconName = "moon-outline" } = props;
   const { styles, theme } = useStyles(stylesheet);
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Ionicons name="log-out-outline" size={theme.dimensions.size_24} color={theme.colors.text} />
+      <Ionicons name={iconName} size={theme.dimensions.size_24} color={theme.colors.text} />
     </TouchableOpacity>
   );
 };
 
-export default LogoutButton;
+export default ThemeButton;
 
 const stylesheet = createStyleSheet((theme) => ({
   container: {},
