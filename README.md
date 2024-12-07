@@ -33,4 +33,10 @@ A simple learning-oriented mobile app built with [**Expo**](https://expo.dev/), 
 
 
 ## Screenshots
-(TBD)
+- **Light Theme**
+  <br /><br />
+  <img src="./src/assets/images/screenshots/Home_Light.png" width="200">  <img src="./src/assets/images/screenshots/Login_Light.png" width="200">  <img src="./src/assets/images/screenshots/Google_Light.png" width="200">  <img src="./src/assets/images/screenshots/Profile_Light.png" width="200"> 
+  <br /><br />
+- **Dark Theme** 
+  <br /><br />
+  <img src="./src/assets/images/screenshots/Home_Dark.png" width="200"> <img src="./src/assets/images/screenshots/Login_Dark.png" width="200"> <img src="./src/assets/images/screenshots/Google_Dark.png" width="200"> <img src="./src/assets/images/screenshots/Profile_Dark.png" width="200">
