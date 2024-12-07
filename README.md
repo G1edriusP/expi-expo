@@ -21,6 +21,8 @@ A simple learning-oriented mobile app built with [**Expo**](https://expo.dev/), 
   - Log in with Google via **Clerk**, with user data automatically synced to **Convex** database.  
 - **Navigation**:  
   - Tabs navigation made with **Expo Router**.
+- **Styling**:  
+  - UI styles and themes with [**UniStyles**](https://v2.unistyl.es/start/introduction/).
 
 
 
